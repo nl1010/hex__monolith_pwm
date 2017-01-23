@@ -61,8 +61,7 @@ float *get_current_pdm_status(){
 
 
 void pdm_mapping(){
-   float *k_img = get_current_pdm_status();
-
+  //  float *k_img = get_current_pdm_status();
 }
 
 
@@ -84,12 +83,14 @@ void debug_print_arr_int(int array[], int size){
 }
 
 
-/*Sort k incremently and return the position value after sorted. */
+/*Sort k incremently and return the position value after buble sorted.
+  k_info is a struct contain k value it's corresponding position values
+ */
 struct k_info sort_k_inc(float array[], int arr_size){
   struct k_info k_info_ins; //struct instance init
   //sort array incremently with buble sort
-  Serial.println("before sort");
-  debug_print_arr(array,arr_size);
+  // Serial.println("before sort");
+  // debug_print_arr(array,arr_size);
   int position_arr[arr_size];
   for (int i=0; i<(arr_size);i++){
      position_arr[i] = i+1;
@@ -111,10 +112,10 @@ struct k_info sort_k_inc(float array[], int arr_size){
      }
    }
   }
-  Serial.println("after sort");
-  debug_print_arr(array,arr_size);
-  debug_print_arr_int(position_arr,arr_size);
-  Serial.println();
+  // Serial.println("after sort");
+  // debug_print_arr(array,arr_size);
+  // debug_print_arr_int(position_arr,arr_size);
+  // Serial.println();
 
   k_info_ins.k_sorted = array;
   k_info_ins.k_pos = position_arr;
@@ -125,14 +126,7 @@ struct k_info sort_k_inc(float array[], int arr_size){
 
 
 
-
-
-
-
-
 /// main
-
-
 
 
 void setup() {
@@ -152,4 +146,5 @@ void loop(){
   struct k_info arr = sort_k_inc(array,size);
   Serial.print("--");
   debug_print_arr_int(arr.k_pos,size);
+  debug_print_arr(arr.k_sorted,size);
 }
