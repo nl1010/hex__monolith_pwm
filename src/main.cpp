@@ -71,13 +71,24 @@ void debug_print_arr(float array[], int size){
   Serial.println();
 }
 
+void debug_print_arr_int(int array[], int size){
+  for (int i=0; i<size; i++){
+    Serial.print(array[i]);
+    Serial.print(',');
+  }
+  Serial.println();
+}
 
 
-/*success return 1 otherwise 0*/
-int sort_k_inc(float array[], int arr_size){
+/*Sort k incremently and return the position value after sorted. */
+int *sort_k_inc(float array[], int arr_size){
   //sort array incremently with buble sort
   Serial.println("before sort");
   debug_print_arr(array,arr_size);
+  int position_arr[arr_size];
+  for (int i=0; i<(arr_size);i++){
+     position_arr[i] = i+1;
+  }
   // float new_array[arr_size];
   for (int i=0; i<(arr_size-1); i++){
     for (int j=0; j<(arr_size-(i+1)); j++){
@@ -86,6 +97,10 @@ int sort_k_inc(float array[], int arr_size){
        float temp = array[j];
        array[j] = array[j+1];
        array[j+1] = temp;
+       //the position also swap according to the array
+       int t = position_arr[j];
+       position_arr[j] = position_arr[j+1];
+       position_arr[j+1] = t;
      } else {
        //do nothing
      }
@@ -93,7 +108,10 @@ int sort_k_inc(float array[], int arr_size){
   }
   Serial.println("after sort");
   debug_print_arr(array,arr_size);
+  debug_print_arr_int(position_arr,arr_size);
   Serial.println();
+
+  return position_arr;
 }
 
 
@@ -123,5 +141,7 @@ void loop(){
   float array[] = {2, 1, 0,5,6,1.7};
   int size = sizeof(array)/sizeof(float);
   debug_print_arr(array,size);
-  sort_k_inc(array,size);
+  int *arr = sort_k_inc(array,size);
+  Serial.print("--");
+  debug_print_arr_int(arr,size);
 }
