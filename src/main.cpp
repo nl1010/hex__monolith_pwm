@@ -6,6 +6,10 @@ e.g.  1,1.5,0.5---inc_sort---> {{0.5,1,1.5},{3,1,2}}
 */
 float k_bi_info[2][3];
 
+struct k_info {
+  float *k_sorted;
+  int *k_pos;
+};
 
 
 
@@ -81,7 +85,8 @@ void debug_print_arr_int(int array[], int size){
 
 
 /*Sort k incremently and return the position value after sorted. */
-int *sort_k_inc(float array[], int arr_size){
+struct k_info sort_k_inc(float array[], int arr_size){
+  struct k_info k_info_ins; //struct instance init
   //sort array incremently with buble sort
   Serial.println("before sort");
   debug_print_arr(array,arr_size);
@@ -111,7 +116,10 @@ int *sort_k_inc(float array[], int arr_size){
   debug_print_arr_int(position_arr,arr_size);
   Serial.println();
 
-  return position_arr;
+  k_info_ins.k_sorted = array;
+  k_info_ins.k_pos = position_arr;
+
+  return k_info_ins;
 }
 
 
@@ -141,7 +149,7 @@ void loop(){
   float array[] = {2, 1, 0,5,6,1.7};
   int size = sizeof(array)/sizeof(float);
   debug_print_arr(array,size);
-  int *arr = sort_k_inc(array,size);
+  struct k_info arr = sort_k_inc(array,size);
   Serial.print("--");
-  debug_print_arr_int(arr,size);
+  debug_print_arr_int(arr.k_pos,size);
 }
